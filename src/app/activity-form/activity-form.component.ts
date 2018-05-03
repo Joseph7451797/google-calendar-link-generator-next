@@ -15,29 +15,29 @@ moment.locale('zh-tw');
 
 export class ActivityFormComponent {
 
-  submitted : boolean = false;
-  resultCopied : boolean = false;
-  resultCopiedMessage : string = '';
+  submitted: boolean = false;
+  resultCopied: boolean = false;
+  resultCopiedMessage: string = '';
   model = new Activity('', '', '', '', '');
-  momentFormat : string = 'YYYY MMM DD, dddd, H:mm:ss';
-  start_human : string = '';
-  end_human : string = '';
+  momentFormat: string = 'YYYY MMM DD, dddd, H:mm:ss';
+  start_human: string = '';
+  end_human: string = '';
 
-  onStartChange($event: any) {
+  onStartChange($event: any): void {
     const value = $event.value;
     const humanvalue = moment(value).format(this.momentFormat);
     this.model.start = value;
     this.start_human = humanvalue;
   }
 
-  onEndChange($event: any) {
+  onEndChange($event: any): void {
     const value = $event.value;
     const humanvalue = moment(value).format(this.momentFormat);
     this.model.end = value;
     this.end_human = humanvalue;
   }
 
-  onSubmit() {
+  onSubmit(): void|boolean {
     if ( this.submitted ) {
       return false;
     }
@@ -64,12 +64,12 @@ export class ActivityFormComponent {
     }, 50);
   }
 
-  onCopied() {
+  onCopied(): void {
     this.resultCopied = true;
     this.resultCopiedMessage = '複製成功！';
   }
 
-  onCopiedError() {
+  onCopiedError(): void {
     this.resultCopied = false;
     this.resultCopiedMessage = '複製失敗，請選取文字後手動複製';
   }
