@@ -2,7 +2,7 @@
 
 Add some information, then generate URL of Google calendar! This project is inpired by [decomaan's great work](https://github.com/decomaan/google-calendar-link-generator) and is rewrited with Angular 5.
 
-Todo: Demo page, i18n, Form Validation
+Todo: Demo page, i18n
 
 (This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.)
 

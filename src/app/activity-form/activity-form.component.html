@@ -2,7 +2,7 @@
   <div class="col"></div>
   <div class="col-md-7">
     <h1 class="mt-4">Google 日曆 URL 生成器</h1>
-    <h2 class="mt-3">生成一個網址，點擊後自動生成 Google 日曆活動資訊</h2>
+    <h2 class="mt-3 text-secondary font-weight-normal">生成一個網址，點擊後自動生成 Google 日曆活動資訊</h2>
   </div>
   <div class="col"></div>
 </div>
@@ -13,39 +13,56 @@
     <form (ngSubmit)="onSubmit()" #activityForm="ngForm">
       <h3 class="mt-5 mb-3">活動資訊</h3>
       <div class="form-group">
-        <label for="eventTitle">活動名稱:</label>
-        <input type="text" id="eventTitle" class="form-control" [(ngModel)]="model.title" name="title" required>
+        <label for="eventTitle">活動名稱（必填）:</label>
+        <input type="text" id="eventTitle" class="form-control" [(ngModel)]="model.title" name="title" #title="ngModel" required>
+        <div class="alert alert-danger p-6" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <div *ngIf="title.errors.required">
+            必填
+          </div>
+        </div>
       </div>
+
       <div class="form-group">
         <label for="eventDesc">活動描述（活動資訊中的「說明」欄位）:</label>
-        <textarea id="eventDesc" class="form-control" [(ngModel)]="model.details" name="desc" required></textarea>
+        <textarea id="eventDesc" class="form-control" [(ngModel)]="model.details" name="desc"></textarea>
       </div>
       <div class="form-group">
         <label for="eventLocat">地點:</label>
-        <textarea id="eventLocat" class="form-control" [(ngModel)]="model.location" name="locat" required></textarea>
+        <textarea id="eventLocat" class="form-control" [(ngModel)]="model.location" name="locat"></textarea>
       </div>
 
       <h3 class="mt-5 mb-3">日期與時間</h3>
       <div class="form-group">
-        <label for="eventDateStart">開始時間:</label>
+        <label for="eventDateStart">開始時間（必填）:</label>
         <div class="input-group">
-          <input type="text" id="eventDateStart" class="form-control" value="{{start_human}}" name="start" readonly required>
+          <input type="text" id="eventDateStart" class="form-control" [(ngModel)]="model.start_human" name="start" #start="ngModel" readonly required>
+        </div>
+        <div class="alert alert-danger p-6" *ngIf="start.invalid && (start.dirty || start.touched)">
+          <div *ngIf="start.errors.required">
+            必填
+          </div>
         </div>
         <div class="mt-3 mh-270">
           <dl-date-time-picker (change)="onStartChange($event)"></dl-date-time-picker>
         </div>
       </div>
       <div class="form-group">
-        <label for="eventDateEnd">結束時間:</label>
+        <label for="eventDateEnd">結束時間（必填）:</label>
         <div class="input-group">
-          <input type="text" id="eventDateEnd" class="form-control" value="{{end_human}}" name="end" readonly required>
+          <input type="text" id="eventDateEnd" class="form-control" [(ngModel)]="model.end_human" name="end" #end="ngModel" readonly required>
+        </div>
+        <div class="alert alert-danger p-6" *ngIf="end.invalid && (end.dirty || end.touched)">
+          <div *ngIf="end.errors.required">
+            必填
+          </div>
         </div>
         <div class="mt-3 mh-270">
           <dl-date-time-picker (change)="onEndChange($event)"></dl-date-time-picker>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary">產生網址！</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!activityForm.form.valid">產生網址！</button>
+      <button type="button" class="btn btn-default" (click)="activityForm.reset();">清空輸入值</button>
 
     </form>
     <div class="mt-5" *ngIf="model.resultUrl">

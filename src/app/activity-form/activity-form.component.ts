@@ -15,26 +15,24 @@ moment.locale('zh-tw');
 
 export class ActivityFormComponent {
 
-  submitted: boolean = false;
-  resultCopied: boolean = false;
-  resultCopiedMessage: string = '';
-  model = new Activity('', '', '', '', '');
-  momentFormat: string = 'YYYY MMM DD, dddd, H:mm:ss';
-  start_human: string = '';
-  end_human: string = '';
+  submitted = false;
+  resultCopied = false;
+  resultCopiedMessage = '';
+  model = new Activity('', '', '', '', '', '', '');
+  momentFormat = 'YYYY MMM DD, dddd, H:mm:ss';
 
   onStartChange($event: any): void {
     const value = $event.value;
     const humanvalue = moment(value).format(this.momentFormat);
     this.model.start = value;
-    this.start_human = humanvalue;
+    this.model.start_human = humanvalue;
   }
 
   onEndChange($event: any): void {
     const value = $event.value;
     const humanvalue = moment(value).format(this.momentFormat);
     this.model.end = value;
-    this.end_human = humanvalue;
+    this.model.end_human = humanvalue;
   }
 
   onSubmit(): void|boolean {
@@ -45,7 +43,7 @@ export class ActivityFormComponent {
 
     const body = document.body;
     const html = document.documentElement;
-    const { start, end, title, location, details } = this.model
+    const { start, end, title, location, details } = this.model;
 
     this.model.resultUrl = generateUrl({
       start: start,
@@ -72,5 +70,9 @@ export class ActivityFormComponent {
   onCopiedError(): void {
     this.resultCopied = false;
     this.resultCopiedMessage = '複製失敗，請選取文字後手動複製';
+  }
+
+  resetInputs(): void {
+    this.model = new Activity('', '', '', '', '', '', '');
   }
 }
